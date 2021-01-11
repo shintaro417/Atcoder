@@ -1,0 +1,41 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        int c = sc.nextInt();
+        
+        int ans = 0;
+        
+        if(a % 2 != 0 || b % 2 != 0 || c % 2 != 0){
+            System.out.println(ans);
+            return;
+        }
+        
+        while(true){
+           int halfA = (b + c) / 2;
+           int halfB = (c + a) / 2;
+           int halfC = (a + b) / 2;
+           
+           ans++;
+           
+           if(halfA % 2 != 0 || halfB % 2 != 0 || halfC % 2 != 0){
+               break;
+           }else if(halfA == halfB && halfC == halfB){
+               System.out.print(-1);
+               return ;
+           }else if(ans >= 1000){
+               System.out.println(-1);
+               return;
+           }
+           
+           a = halfA;
+           b = halfB;
+           c = halfC;
+        }
+        System.out.println(ans);
+        sc.close();
+    }
+}
