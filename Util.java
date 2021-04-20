@@ -1,15 +1,13 @@
 import java.util.*;
 
 /**
-*Javaで使える考え方をまとめる。
+*Javaで使える処理方法をまとめる。
 /
 /**
 *HashMap(辞書型)配列を昇順ソートする方法
 */
 public class Main {
     public static void main(String[] args) {
-        // 自分の得意な言語で
-        // Let's チャレンジ！！
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         
@@ -42,3 +40,57 @@ public class Main {
         }
         System.out.println("false");
     }
+
+/**
+* 重複したキーに紐づけられた値を合計して、valueで降順ソートする処理
+
+*/
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt(); //行数
+        
+        Map<String,Integer> map = new TreeMap<String,Integer>();
+        
+        for(int i = 0;i < n;i++){
+            String key = sc.next();
+            int value = sc.nextInt();
+            //putメソッドの戻り値はvalueかnull
+            Integer lastValue = map.put(key,value);
+            
+            if(lastValue != null){
+                map.put(key,value + lastValue);
+            }
+            
+        }
+        
+        Map<String,Integer> ans = sortMapByValue(map);
+        
+        for(String key : ans.keySet()){
+            System.out.println(key + " " + map.get(key));
+        }
+        
+    }
+    
+    //降順ソート
+    public static LinkedHashMap<String, Integer> sortMapByValue(Map<String, Integer> map) {
+        //map.entrySet -> 対象となるMapオブジェクトのセットビューを返す。
+        // セットビュー　-> 対象となるMapのkeyとvalueの組の一覧
+        List<Map.Entry<String, Integer>> entries = new LinkedList<>(map.entrySet());
+        /**
+        * Collections.sort(List<T> list,Comparator<? super T> c) -> 数値を降順/昇順にソートする。
+        * @param list ソートされるリスト。
+        * @param c リストの順序を決定するコンパレータ。null値は、要素の自然順序付けが使用されることを示す。
+        */
+        //二つの値を比較する。
+        // compareTo() -> このオブジェクトが指定されたオブジェクトより小さい場合は負の整数、等しい場合はゼロ、大きい場合は正の整数
+        Collections.sort(entries, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+    
+        //ソートしたものを入れなおす
+        LinkedHashMap<String, Integer> result = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : entries) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
+    }
+}
