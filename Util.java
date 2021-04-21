@@ -43,7 +43,7 @@ public class Main {
 
 /**
 * 重複したキーに紐づけられた値を合計して、valueで降順ソートする処理
-
+*
 */
 public class Main {
     public static void main(String[] args) {
@@ -93,4 +93,40 @@ public class Main {
         }
         return result;
     }
+}
+
+
+/**
+* 重複したキーに紐づけられた値を合計して、valueで降順ソートする処理
+*　-> 別解
+*/
+
+public class Main {
+  public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    int n = sc.nextInt();
+    Map<Character, Integer> map = new HashMap<>();
+    
+    for (int i=0; i<n; i++) {
+      char c = sc.next().charAt(0);
+      int v = sc.nextInt();
+      //containsKey -> キーが重複しているかチェックする。
+      if (map.containsKey(c))
+          //重複していたら、今存在する組に足しこむ
+        map.put(c, map.get(c) + v);
+      else
+        map.put(c, v);
+    }
+
+    //HashMapに格納されている値を配列に入れる。
+    List<Integer> ll = new ArrayList<>(map.values());
+    //数値を降順ソートするには一旦昇順ソートにしてから降順ソートにする！！
+    Collections.sort(ll); //昇順ソート
+    Collections.reverse(ll); //降順ソート
+    
+    for (int v : ll)
+      for (Character c : map.keySet())
+        if (map.get(c) == v) //キーから取得したvalueと降順ソートした値が同じなら、出力
+          System.out.println(c + " " + v);
+  }
 }
