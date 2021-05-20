@@ -58,7 +58,7 @@ public class Main {
 				if(4 < add + used)continue;
 				int cnt = add + used;
 
-				if(cnt == 1) ans += 1 * comb(unknown, add);
+				if(cnt == 1) ans += 1 * comb(unknown, add); //?になっている候補から何個をoとしてカウントするかの組み合わせが必要だから、全ての場合で二項係数の掛け算がある。
 				else if(cnt == 2)ans += (2 * 4 + comb(4,2)) * comb(unknown, add);
 				else if(cnt == 3)ans += 3 * 4 * 3 * comb(unknown, add);
 				else if (cnt == 4) ans += 4 * 3 * 2 * comb(unknown, add);
